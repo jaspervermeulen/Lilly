@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 import firebase from "./Authentication/base";
 import { AuthContext } from "./Authentication/Auth.js";
+import { Redirect } from 'react-router-dom';
 
 const Home = () => {
   const [log, setLog] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
   const [bio, setBio] = useState()
+  const [purpose, setPurpose] = useState()
 
   // Get current user with useContext and authContext from authentication base
   const { currentUser } = useContext(AuthContext);
@@ -27,14 +29,16 @@ const Home = () => {
         console.log('no ok')
         setLog("false");
       }
-    });
+  });
   
   const onCreate = () => {
     firebase.firestore().collection('Users').doc(currentUser.uid).set({
       firstName: firstName,
       lastName: lastName,
-      bio: bio
+      bio: bio,
+      purpose: purpose
     })
+    setLog("true");
   }
   
   //Return statement
@@ -42,9 +46,9 @@ const Home = () => {
     <>
       {
         log === "true" ? (
-          <p>Welkom op de website man</p>
+          <Redirect to="/menuuser" />
         ) : (
-          <>
+          <div>
               <p>Vul uw gegevens verder aan</p>
               <label>
                 Voornaam
@@ -72,12 +76,34 @@ const Home = () => {
                     setBio(e.target.value)
                   }}
                 />  
-              </label> 
+              </label>
+              <label>
+                Gebruiker
+                <input
+                  type="radio"
+                  name="purpose"
+                  value="Gebruiker"
+                  onClick={() => {
+                    setPurpose("Gebruiker")
+                  }}
+                />
+              </label>
+              <label>
+                Vrijwilliger
+                <input
+                  type="radio"
+                  name="purpose"
+                  value="Vrijwilliger"
+                  onClick={() => {
+                    setPurpose("Vrijwilliger")
+                  }}
+                />
+              </label>
               <button onClick={onCreate}>Update</button>
-          </>
+          </div>
         )
       }
-      <button onClick={() => firebase.auth().signOut()}>Sign out</button>  
+      
     </>
   )
 
