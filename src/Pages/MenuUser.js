@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import firebase from "../Authentication/base";
 
 const GlobalStyles = styled.div`
   margin: 24px;
@@ -19,9 +19,7 @@ const TitleStyles = styled.h1`
   font-family: Helvetica;
 `;
 
-
-
-const ScanCardStyles = styled.div`
+const ScanCardStyles = styled(Link)`
   width: 100%;
   background-color: #F1CB00;
   display: flex;
@@ -57,13 +55,15 @@ const ExpertCardStyles = styled.div`
 const MenuUser = () => {
   return (
     <GlobalStyles>
-      <button onClick={() => firebase.auth().signOut()}>Sign out</button>   
+         
       <TopBarStyles>
         <TitleStyles>Licht {'&'} Liefde</TitleStyles>
-        <svg width="33" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 17c4.418 0 8-3.806 8-8.5S20.418 0 16 0 8 3.806 8 8.5s3.582 8.5 8 8.5zM0 36c0-8.839 7.385-16 16.5-16S33 27.161 33 36" fill="#000"/></svg>
+        <Link to="/profile">
+          <svg width="33" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 17c4.418 0 8-3.806 8-8.5S20.418 0 16 0 8 3.806 8 8.5s3.582 8.5 8 8.5zM0 36c0-8.839 7.385-16 16.5-16S33 27.161 33 36" fill="#000" /></svg>
+        </Link>
       </TopBarStyles>
       
-      <ScanCardStyles>
+      <ScanCardStyles to="/scan">
         <svg width="83" height="87" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)" stroke="#000" stroke-width="19.379" stroke-miterlimit="10"><path d="M35.2 9.7H22.5c-7 0-12.8 5.7-12.8 12.8v11M9.7 51v12.8c0 7 5.7 12.8 12.8 12.8h11M47.1 76.6h12.8c7 0 12.8-5.7 12.8-12.8v-11M72.6 35.8V23c0-7-5.7-12.8-12.8-12.8h-11"/></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h82.3v86.2H0z"/></clipPath></defs></svg>
         <h2>Scan</h2>
       </ScanCardStyles>
