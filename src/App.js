@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AuthProvider } from "./Authentication/Auth";
 import { Reset } from 'styled-reset';
 
+
 import PrivateRoute from "./Authentication/PrivateRoute";
 
 import Scan from "./Pages/User/Scan";
@@ -16,6 +17,7 @@ import Expert from "./Pages/User/Expert";
 function App() {
   return (
     <AuthProvider>
+      
       <Reset />
       <Router>
         <div>

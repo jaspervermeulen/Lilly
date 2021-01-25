@@ -29,10 +29,16 @@ const Profile = () => {
     }
   })
 
+  // voornaam: firstName,
+  // achternaam: lastName,
+  // volledige_naam: firstName + ' ' + lastName,
+  // email: currentUser.email,
+  // id: currentUser.uid,
+  // bio: bio,
+  // soort_gebruiker: purpose
+
   const onSubmit = () => {
-    firebase.firestore().collection('Users').doc(currentUser.uid).set({
-      firstName: firstName,
-      lastName: lastName,
+    firebase.firestore().collection('Users').doc(currentUser.uid).update({
       bio: bio
     })
     setSucces(true);
@@ -56,25 +62,9 @@ const Profile = () => {
       }
       <button onClick={() => firebase.auth().signOut()}>Sign out</button>
       <div>
-       
-        <label>
-          Voornaam
-          <input
-            value={firstName}
-            onChange={e => {
-              setFirstName(e.target.value)
-            }}
-          />  
-        </label>
-        <label>
-          Achternaam
-          <input
-            value={lastName}
-            onChange={e => {
-              setLastName(e.target.value)
-            }}
-          />  
-        </label>
+        <p>Verander je info</p>
+        
+        
         <label>
           Bio
           <input
@@ -84,6 +74,7 @@ const Profile = () => {
             }}
           />  
         </label>
+        <br />
         <button onClick={onSubmit}>Change info</button>
       </div>
     </>

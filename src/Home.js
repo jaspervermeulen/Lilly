@@ -33,10 +33,13 @@ const Home = () => {
   
   const onCreate = () => {
     firebase.firestore().collection('Users').doc(currentUser.uid).set({
-      firstName: firstName,
-      lastName: lastName,
+      voornaam: firstName,
+      achternaam: lastName,
+      volledige_naam: firstName + ' ' + lastName,
+      email: currentUser.email,
+      id: currentUser.uid,
       bio: bio,
-      purpose: purpose
+      soort_gebruiker: purpose
     })
     setLog("true");
   }
@@ -59,6 +62,7 @@ const Home = () => {
                   }}
                 />  
               </label>
+              <br />
               <label>
                 Achternaam
                 <input
@@ -68,6 +72,7 @@ const Home = () => {
                   }}
                 />  
               </label>
+              <br />
               <label>
                 Bio
                 <input
@@ -77,6 +82,7 @@ const Home = () => {
                   }}
                 />  
               </label>
+              <br />
               <label>
                 Gebruiker
                 <input
@@ -88,6 +94,7 @@ const Home = () => {
                   }}
                 />
               </label>
+              <br />
               <label>
                 Vrijwilliger
                 <input
@@ -99,6 +106,7 @@ const Home = () => {
                   }}
                 />
               </label>
+              <br />
               <button onClick={onCreate}>Update</button>
           </div>
         )
