@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../Authentication/Auth";
 import firebase from "../../Authentication/base";
 
@@ -29,14 +30,6 @@ const Profile = () => {
     }
   })
 
-  // voornaam: firstName,
-  // achternaam: lastName,
-  // volledige_naam: firstName + ' ' + lastName,
-  // email: currentUser.email,
-  // id: currentUser.uid,
-  // bio: bio,
-  // soort_gebruiker: purpose
-
   const onSubmit = () => {
     firebase.firestore().collection('Users').doc(currentUser.uid).update({
       bio: bio
@@ -53,16 +46,17 @@ const Profile = () => {
       {
         succes === true ? (
           <div>
-            <p>Info updated succesfully</p>
+            <p>Je info is succesvol geupdate!</p>
             <button onClick={onClick}>x</button>
           </div>
         ) : (
             <></>
         )
       }
-      <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+      <Link to="/">Ga terug</Link>
+      <button onClick={() => firebase.auth().signOut()}>Log uit</button>
       <div>
-        <p>Verander je info</p>
+        <p>Verander hier je persoonlijke info</p>
         
         
         <label>
@@ -75,7 +69,7 @@ const Profile = () => {
           />  
         </label>
         <br />
-        <button onClick={onSubmit}>Change info</button>
+        <button onClick={onSubmit}>Verandere je info</button>
       </div>
     </>
   )

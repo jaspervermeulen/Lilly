@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
 import app from "./base.js";
-// import { AuthContext } from "./Auth.js";
 
 const Login = ({ history }) => {
   const handleLogin = useCallback(
@@ -20,27 +19,21 @@ const Login = ({ history }) => {
     [history]
   );
 
-  // const { currentUser } = useContext(AuthContext);
-
-  // if (currentUser) {
-  //   return <Redirect to="/" />;
-  // }
-
   return (
     <div>
-      <h1>Log in</h1>
+      <h1>Welkom op de Licht en Liefde app, meld je hieronder aan!</h1>
       <form onSubmit={handleLogin}>
         <label>
-          Email
+          E-mailadres
           <input name="email" type="email" placeholder="email" />
         </label>
         <br />
         <label>
-          Password
+          Wachtwoord
           <input name="password" type="password" placeholder="password" />
         </label>
         <br />
-        <button type="submit">Log in</button>
+        <button type="submit">Meld je aan</button>
       </form>
     </div>
   )

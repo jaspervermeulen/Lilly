@@ -1,23 +1,24 @@
-import React, { useRef, useEffect } from "react";
-// import Camera, {  FACING_MODE } from 'react-camera-ios';
-import 'react-camera-ios/build/styles.css';
-
+import React, { useRef, useState } from "react";
 // eslint-disable-next-line
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 
 import { drawRect } from "./utilities";
+import { Link } from "react-router-dom";
 
 const videoConstraints = {
-  facingMode: "environment"
+  facingMode: "environment",
+  audio: false
 };
 
 const containerStyle = {
   display: 'flex',
-  height: 480,
-  width: 640,
+  height: "90vh",
+  width: "100vw",
 };
+
+
 
 const cameraStyle = {
   position: "absolute",
@@ -27,8 +28,8 @@ const cameraStyle = {
   right: 0,
   textAlign: "center",
   zindex: 9,
-  width: 640,
-  height: 480,
+  width: "100vw",
+  height: "90vh",
 };
 
 const canvasStyles = {
@@ -39,70 +40,79 @@ const canvasStyles = {
   right: 0,
   textAlign: "center",
   zindex: 8,
-  width: 640,
-  height: 480,
+  width: "100vw",
+  height: "90vh",
+  display: 'none'
 }
 
 const Scan = () => {
-
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // Main function
+  const [object, setObject] = useState("Zoeken");
+
+  // Algemene COCOSSD functie
   const runCoco = async () => {
     const net = await cocossd.load();
-    alert("Handpose model loaded.");
-    //  Loop and detect hands
-    setInterval(() => {
-      detect(net);
-    }, 10);
+    detect(net);
   };
 
-  const detect = async (net) => {
 
-    // Check data is available
+  // Detecteer functie
+  const detect = async (net) => {
+    // Check als webcam werkt
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
 
-      // Get Video Properties
+      // Haal properties video op
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
-      // Set video width
+      // Zet video width en height
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      // Set canvas height and width
+      // Zet canvas width en height (canvas voor drawrect)
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      // Make Detections
+      // Detecteer op net
       const obj = await net.detect(video);
 
-      // Draw mesh
+      // Teken in canvas
       const ctx = canvasRef.current.getContext("2d");
       drawRect(obj, ctx); 
+
+      // setInterval(() => this.setState({ time: Date.now() }), 1000)
+      ctx.fillStyle === '#000000' ? setObject("aan het zoeken") : setObject(obj[0]["class"])
+  
     }
   };
+ 
 
-  useEffect(()=>{runCoco()});
+  // useEffect(()=>{runCoco()});
 
   return (
     <div style={containerStyle}>
+      <Link to="/">Ga terug</Link>
+      <p>{object}</p>
       <Webcam
         ref={webcamRef}
         muted={true} 
         style={cameraStyle}
         videoConstraints={videoConstraints}
+        onClick={runCoco}
       />
       <canvas
-          ref={canvasRef}
-          style={canvasStyles}
-        />
+        ref={canvasRef}
+        style={canvasStyles}
+        onClick={runCoco}
+      />
+      {/* <button style={btnStyle} onClick={runCoco}></button> */}
     </div>
   )
 }
