@@ -9,10 +9,11 @@ import PrivateRoute from "./Authentication/PrivateRoute";
 import Scan from "./Pages/User/Scan";
 import Home from "./Home";
 import Login from "./Authentication/Login";
-import MenuUser from "./Pages/MenuUser";
+import MenuUser from "./Pages/User/MenuUser";
 import Profile from "./Pages/User/Profile";
 import VideoCall from "./Pages/User/VideoCall";
 import Expert from "./Pages/User/Expert";
+import MenuVolunteer from "./Pages/Volunteer/MenuVolunteer";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           <PrivateRoute exaxt path="/video" component={VideoCall} />
           <PrivateRoute exact path="/expert" component={Expert} />
           <PrivateRoute exact path="/menuuser" component={MenuUser} />
+          <PrivateRoute exact path="/menuvolunteer" component={MenuVolunteer} />
+          
           <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
         </div>

@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { AuthContext } from "../../Authentication/Auth";
 import firebase from "../../Authentication/base";
 
 const Profile = () => {
-  const [firstName, setFirstName] = useState(undefined)
-  const [lastName, setLastName] = useState(undefined)
+  const [fullname, setName] = useState(undefined)
   const [bio, setBio] = useState(undefined)
 
   const [succes, setSucces] = useState(false);
@@ -16,17 +15,14 @@ const Profile = () => {
   userRef.get().then(function (doc) {
     if (doc.exists) {
       
-      if (firstName === undefined) {
-        setFirstName(doc.data().firstName)
-      } 
-      if (lastName === undefined) {
-        setLastName(doc.data().lastName)
+      if (fullname === undefined) {
+        setName(doc.data().volledige_naam)
       } 
       if (bio === undefined) {
         setBio(doc.data().bio)
       } 
     } else {
-      console.log("No such document")
+      <Redirect to={"/menuuser"} />
     }
   })
 
@@ -53,9 +49,10 @@ const Profile = () => {
             <></>
         )
       }
-      <Link to="/">Ga terug</Link>
+      <Link to="/menuuser">Ga terug</Link>
       <button onClick={() => firebase.auth().signOut()}>Log uit</button>
       <div>
+        <p>Je bent ingelogd als {fullname}</p>
         <p>Verander hier je persoonlijke info</p>
         
         

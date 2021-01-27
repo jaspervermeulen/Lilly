@@ -39,7 +39,8 @@ const Home = () => {
       email: currentUser.email,
       id: currentUser.uid,
       bio: bio,
-      soort_gebruiker: purpose
+      soort_gebruiker: purpose,
+      links: []
     })
     setLog("true");
   }
@@ -49,7 +50,8 @@ const Home = () => {
     <>
       {
         log === "true" ? (
-          <Redirect to="/menuuser" />
+          purpose === 'Gebruiker' ? <Redirect to="/menuuser" /> : <Redirect to="/menuvolunteer" />
+          
         ) : (
           <div>
               <p>Vul uw gegevens verder aan</p>
@@ -114,80 +116,6 @@ const Home = () => {
       
     </>
   )
-
-  // const [blogs,setBlogs]=useState([])
-  // const fetchBlogs=async()=>{
-  //   const response=firebase.firestore().collection('Users');
-  //   const data=await response.get();
-  //   data.docs.forEach(item=>{
-  //    setBlogs([...blogs,item.data()])
-  //   })
-  // }
-  // useEffect(() => {
-  //   fetchBlogs();
-  //   // eslint-disable-next-line
-  // }, [])
-  // return (
-  //   <div className="App">
-  //     {
-  //       blogs.map(blog=>{
-  //         return(
-  //           <div key={blog.firstName} className="blog-container">
-  //             <h4>{blog.firstName}</h4>
-  //             <p>{blog.lastName}</p>
-  //           </div>
-  //         )
-  //       })
-  //     }
-  //   </div>
-  // );
-  // // const [users,setUsers]=useState([])
-  // const { currentUser } = useContext(AuthContext);
-
-  // // useEffect(() => {
-  // //   fetchUsers();
-  // // })
-
-  // // const fetchUsers=async()=>{
-  // //   const response = db.collection('users');
-  // //   const data = await response.get();
-  // //   data.forEach(item=>{
-  // //     setUsers([item.data()])
-  // //    })
-  // // }
-
-
-  // db.collection("users").add({
-  //   first: "Ada",
-  //   last: "Lovelace",
-  //   born: 1815
-  // })
-  // .then(function(docRef) {
-  //     console.log("Document written with ID: ", docRef.id);
-  // })
-  // .catch(function(error) {
-  //     console.error("Error adding document: ", error);
-  // });
-
-  // return (
-  //   <>
-  //     {/* {
-  //       users && users.map(user=>{
-  //         return(
-  //           <div className="blog-container">
-  //             <h4>{user.firstName}</h4>
-  //             <p>{user.lastName}</p>
-  //           </div>
-  //         )
-  //       })
-  //     } */}
-  //     <p>Ben je gebruiker of vrijwilliger?</p>
-  //     {/* <p>Home page</p>
-  //     <Link to="scan">Scan</Link>*/}
-  //     <p>{currentUser.uid}</p> 
-  //     <button onClick={() => app.auth().signOut()}>Sign out</button>  
-  //   </>
-  // )
 }
 
 export default Home;
