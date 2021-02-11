@@ -9,6 +9,7 @@ const LoginWrapper = styled.div`
   margin: 20px;
   display: flex;
   flex-direction: column;
+  padding-top:66px;
 `;
 
 const Title = styled.h1`
