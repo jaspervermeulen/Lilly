@@ -2,12 +2,65 @@ import React, { useContext, useState } from 'react';
 import firebase from "./Authentication/base";
 import { AuthContext } from "./Authentication/Auth.js";
 import { Redirect } from 'react-router-dom';
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  margin: 20px;
+`;
+
+const Title = styled.p`
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
+`;
+
+const LabelText = styled.p`
+  font-family: Arial;
+  font-size: 16px;
+  margin-bottom: 8px;
+`;
+
+const LabelTextSpecial = styled.p`
+  font-family: Arial;
+  font-size: 16px;
+  margin-left: 6px;
+`;
+
+const LabelInput = styled.input`
+  border: none;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 0px;
+  font-size: 18px;
+`;
+
+const LabelStyles = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+`;
+
+const LabelStylesSpecial = styled.label`
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonStyled = styled.button`
+  margin-top: 30px;
+  width: 100%;
+  height: 60px;
+  background-color: #00499A;
+  color: white;
+  font-size: 18px;
+`;
 
 const Home = () => {
   const [log, setLog] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
-  const [bio, setBio] = useState()
+  const [nummer, setNummer] = useState()
   const [purpose, setPurpose] = useState()
 
   // Get current user with useContext and authContext from authentication base
@@ -37,10 +90,13 @@ const Home = () => {
       achternaam: lastName,
       volledige_naam: firstName + ' ' + lastName,
       email: currentUser.email,
+      emailCode: `mailto:` + currentUser.email,
+      number: nummer,
+      numberCode: `facetime:` + nummer,
       id: currentUser.uid,
-      bio: bio,
       soort_gebruiker: purpose,
-      links: []
+      links: [],
+      linksExp: []
     })
     setLog("true");
   }
@@ -53,40 +109,39 @@ const Home = () => {
           purpose === 'Gebruiker' ? <Redirect to="/menuuser" /> : <Redirect to="/menuvolunteer" />
           
         ) : (
-          <div>
-              <p>Vul uw gegevens verder aan</p>
-              <label>
-                Voornaam
-                <input
+          <Wrapper>
+              <Title>We zien dat je nieuw bent! <br /> Vul hieronder eerst jou gegevens verder aan.</Title>
+              <LabelStyles>
+                <LabelText>Voornaam</LabelText>
+                <LabelInput
                   value={firstName}
                   onChange={e => {
                     setFirstName(e.target.value)
                   }}
                 />  
-              </label>
+              </LabelStyles>
               <br />
-              <label>
-                Achternaam
-                <input
+              <LabelStyles>
+                <LabelText>Achternaam</LabelText>
+                <LabelInput
                   value={lastName}
                   onChange={e => {
                     setLastName(e.target.value)
                   }}
                 />  
-              </label>
+              </LabelStyles>
               <br />
-              <label>
-                Bio
-                <input
-                  value={bio}
+              <LabelStyles>
+                <LabelText>Nummer</LabelText>
+                <LabelInput
+                  value={nummer}
                   onChange={e => {
-                    setBio(e.target.value)
+                    setNummer(e.target.value)
                   }}
                 />  
-              </label>
+              </LabelStyles>
               <br />
-              <label>
-                Gebruiker
+              <LabelStylesSpecial>
                 <input
                   type="radio"
                   name="purpose"
@@ -95,10 +150,11 @@ const Home = () => {
                     setPurpose("Gebruiker")
                   }}
                 />
-              </label>
+                <LabelTextSpecial>Gebruiker</LabelTextSpecial>
+                
+              </LabelStylesSpecial>
               <br />
-              <label>
-                Vrijwilliger
+              <LabelStylesSpecial>
                 <input
                   type="radio"
                   name="purpose"
@@ -107,10 +163,12 @@ const Home = () => {
                     setPurpose("Vrijwilliger")
                   }}
                 />
-              </label>
+                <LabelTextSpecial>Vrijwilliger</LabelTextSpecial>
+                
+              </LabelStylesSpecial>
               <br />
-              <button onClick={onCreate}>Update</button>
-          </div>
+              <ButtonStyled onClick={onCreate}>Ga verder</ButtonStyled>
+          </Wrapper>
         )
       }
       

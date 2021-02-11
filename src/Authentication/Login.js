@@ -1,8 +1,69 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
 import app from "./base.js";
+import styled from "styled-components";
+
+import Logo from "../assets/logonl.png";
+import { Link } from "react-router-dom";
+
+const LoginWrapper = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.h1`
+  display: none;
+`;
+
+const LabelStyles = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+`;
+
+const LabelText = styled.p`
+  font-family: Arial;
+  font-size: 16px;
+  margin-bottom: 8px;
+`;
+
+const LabelInput = styled.input`
+  border: none;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 0px;
+  font-size: 18px;
+
+  :focus { 
+    outline: 3px solid blue;
+  }
+`;
+
+const ImgStyled = styled.img`
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+
+const ButtonStyled = styled.button`
+  width: 100%;
+  height: 60px;
+  background-color: #00499A;
+  color: white;
+  font-size: 18px;
+`;
+
+const Reset = styled(Link)`
+  align-self: flex-end;
+  text-decoration: none;
+  font-family: 18px;
+  margin-top: 14px;
+  font-family: arial;
+`;
 
 const Login = ({ history }) => {
+
+  
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
@@ -20,22 +81,25 @@ const Login = ({ history }) => {
   );
 
   return (
-    <div>
-      <h1>Welkom op de Licht en Liefde app, meld je hieronder aan!</h1>
+    <LoginWrapper>
+      <ImgStyled src={Logo}  alt="Licht en liefde logo" width="300" />
+      <Title>Welkom op de Licht en Liefde app, <br /> meld je hieronder aan!</Title>
       <form onSubmit={handleLogin}>
-        <label>
-          E-mailadres
-          <input name="email" type="email" placeholder="email" />
-        </label>
+        <LabelStyles>
+          <LabelText>E-mailadres</LabelText>
+          <LabelInput name="email" type="email" placeholder="E-mailadres" />
+        </LabelStyles>
         <br />
-        <label>
-          Wachtwoord
-          <input name="password" type="password" placeholder="password" />
-        </label>
+        <LabelStyles>
+          <LabelText>Wachtwoord</LabelText>
+          <LabelInput name="password" type="password" placeholder="Wachtwoord" />
+        </LabelStyles>
         <br />
-        <button type="submit">Meld je aan</button>
+        <ButtonStyled type="submit">Inloggen</ButtonStyled>
+        
       </form>
-    </div>
+      <Reset to="/reset">Wachtwoord vergeten?</Reset>
+    </LoginWrapper>
   )
 }
 

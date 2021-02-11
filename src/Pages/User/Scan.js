@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
+import styled from "styled-components";
 
 import { drawRect } from "./utilities";
 import { Link } from "react-router-dom";
@@ -14,11 +15,28 @@ const videoConstraints = {
 
 const containerStyle = {
   display: 'flex',
+  flexDirection: 'column',
   height: "90vh",
   width: "100vw",
 };
 
+const TopBar = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #DDDDDD;
+  padding: 20px;
+  z-index: 9999;
+`;
 
+const TopBarLink = styled(Link)`
+  text-decoration: none;
+  font-size: 28px;
+  font-family: Arial;
+  font-weight: bold;
+  color: black
+`;
 
 const cameraStyle = {
   position: "absolute",
@@ -29,7 +47,8 @@ const cameraStyle = {
   textAlign: "center",
   zindex: 9,
   width: "100vw",
-  height: "90vh",
+  height: "80vh",
+
 };
 
 const canvasStyles = {
@@ -45,11 +64,32 @@ const canvasStyles = {
   display: 'none'
 }
 
+const FoundItem = styled.div`
+  background-color: #F1CB00;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 14px 0;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  z-index: 99;
+`;
+
+const FoundItemText = styled.button`
+  font-size: 30px;
+  font-family: Arial;
+  font-weight: bold:
+`;
+
 const Scan = () => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const [object, setObject] = useState("Zoeken");
+  const [object, setObject] = useState("Searching");
 
   // Algemene COCOSSD functie
   const runCoco = async () => {
@@ -88,7 +128,7 @@ const Scan = () => {
       drawRect(obj, ctx); 
 
       // setInterval(() => this.setState({ time: Date.now() }), 1000)
-      ctx.fillStyle === '#000000' ? setObject("aan het zoeken") : setObject(obj[0]["class"])
+      ctx.fillStyle === '#000000' ? setObject("Searching") : setObject(obj[0]["class"])
   
     }
   };
@@ -96,21 +136,31 @@ const Scan = () => {
 
   // useEffect(()=>{runCoco()});
 
+  
+  
+
   return (
     <div style={containerStyle}>
-      <Link to="/">Ga terug</Link>
-      <p>{object}</p>
+      <TopBar>
+        <TopBarLink aria-label="Ga terug naar het beginscherm" to="/menuuser">{'<'} Ga terug</TopBarLink>
+      </TopBar>
+      <FoundItem>
+        
+        <FoundItemText aria-label={object} lang="en" onClick={runCoco}>{object}</FoundItemText>
+      </FoundItem>
       <Webcam
         ref={webcamRef}
         muted={true} 
         style={cameraStyle}
         videoConstraints={videoConstraints}
         onClick={runCoco}
+        aria-label="Klik hier om te herkennen"
       />
       <canvas
         ref={canvasRef}
         style={canvasStyles}
         onClick={runCoco}
+        aria-label="Klik hier om te herkennen"
       />
       {/* <button style={btnStyle} onClick={runCoco}></button> */}
     </div>

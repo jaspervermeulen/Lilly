@@ -14,6 +14,7 @@ import Profile from "./Pages/User/Profile";
 import VideoCall from "./Pages/User/VideoCall";
 import Expert from "./Pages/User/Expert";
 import MenuVolunteer from "./Pages/Volunteer/MenuVolunteer";
+import ResetPage from "./Authentication/Reset";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           
           <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/reset" component={ResetPage} />
         </div>
       </Router>
     </AuthProvider>
