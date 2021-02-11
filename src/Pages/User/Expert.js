@@ -11,6 +11,7 @@ const TopBarStyles = styled.div`
   margin-bottom: 20px;
   background-color: #DDDDDD;
   padding: 20px;
+  padding-top: 52px;
 `;
 
 const TopBarLink = styled(Link)`

@@ -11,6 +11,7 @@ const TopBarStyles = styled.div`
   margin-bottom: 20px;
   background-color: #DDDDDD;
   padding: 20px;
+  padding-top: 52px;
 `;
 
 const TopBarLink = styled(Link)`
@@ -21,11 +22,7 @@ const TopBarLink = styled(Link)`
   color: black
 `;
 
-const Video = styled.video`
-  border: 1px solid blue;
-  width: 50%;
-  height: 50%;
-`;
+
 
 const ProfileStyles = styled(Link)`
   width: 60px;

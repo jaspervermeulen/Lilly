@@ -45,6 +45,7 @@ const ImageWrapperSpecial = styled.button`
 
 const MainWrapper = styled.div`
   height: 100vh;
+  padding-top: 52px;
 `;
 
 const Img = styled.img`

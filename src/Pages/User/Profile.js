@@ -4,15 +4,6 @@ import { AuthContext } from "../../Authentication/Auth";
 import firebase from "../../Authentication/base";
 import styled from "styled-components";
 
-const TopBar = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  background-color: #DDDDDD;
-  padding: 20px;
-`;
-
 const TopBarLink = styled(Link)`
   text-decoration: none;
   font-size: 28px;
@@ -126,6 +117,7 @@ const TopBarStyles = styled.div`
   margin-bottom: 20px;
   background-color: #DDDDDD;
   padding: 20px;
+  padding-top: 52px;
 `;
 
 const ProfileStyles = styled(Link)`
