@@ -106,7 +106,7 @@ const VideoCall = () => {
           {
             linkers.map(link => {
               return <CallGridItem>
-                <CallGridName href="facetime:+32468147857">{link.volledige_naam}</CallGridName>
+                <CallGridName href={link.numberCode}>{link.volledige_naam}</CallGridName>
               </CallGridItem>
             })
           }
