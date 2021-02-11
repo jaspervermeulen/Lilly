@@ -63,6 +63,7 @@ const Home = () => {
   const [nummer, setNummer] = useState()
   const [purpose, setPurpose] = useState()
 
+
   // Get current user with useContext and authContext from authentication base
   const { currentUser } = useContext(AuthContext);
 
@@ -82,7 +83,9 @@ const Home = () => {
         console.log('no ok')
         setLog("false");
       }
-  });
+    });
+  
+
   
   const onCreate = () => {
     firebase.firestore().collection('Users').doc(currentUser.uid).set({
@@ -115,6 +118,7 @@ const Home = () => {
                 <LabelText>Voornaam</LabelText>
                 <LabelInput
                   value={firstName}
+                  required
                   onChange={e => {
                     setFirstName(e.target.value)
                   }}
@@ -125,6 +129,7 @@ const Home = () => {
                 <LabelText>Achternaam</LabelText>
                 <LabelInput
                   value={lastName}
+                  required
                   onChange={e => {
                     setLastName(e.target.value)
                   }}
@@ -135,17 +140,20 @@ const Home = () => {
                 <LabelText>Nummer</LabelText>
                 <LabelInput
                   value={nummer}
+                  required
                   onChange={e => {
                     setNummer(e.target.value)
                   }}
                 />  
               </LabelStyles>
               <br />
+              
               <LabelStylesSpecial>
                 <input
                   type="radio"
                   name="purpose"
                   value="Gebruiker"
+                  required
                   onClick={() => {
                     setPurpose("Gebruiker")
                   }}
@@ -158,6 +166,7 @@ const Home = () => {
                 <input
                   type="radio"
                   name="purpose"
+                  required
                   value="Vrijwilliger"
                   onClick={() => {
                     setPurpose("Vrijwilliger")

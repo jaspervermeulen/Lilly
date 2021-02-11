@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { withRouter } from "react-router";
 import app from "./base.js";
 import styled from "styled-components";
@@ -63,6 +63,7 @@ const Reset = styled(Link)`
 
 const Login = ({ history }) => {
 
+  const [error, setError] = useState();
   
   const handleLogin = useCallback(
     async event => {
@@ -74,7 +75,13 @@ const Login = ({ history }) => {
           .signInWithEmailAndPassword(email.value, password.value);
         history.push("/");
       } catch (error) {
-        alert(error);
+        if (error.code === "auth/invalid-email") {
+          alert('Email adres is niet juist.')
+        }else if (error.code === "auth/invalid-password") {
+          alert('Wachtwoord is niet juist.')
+        } else {
+          alert('Er is een probleem opgetreden.')
+        }
       }
     },
     [history]
@@ -85,14 +92,15 @@ const Login = ({ history }) => {
       <ImgStyled src={Logo}  alt="Licht en liefde logo" width="300" />
       <Title>Welkom op de Licht en Liefde app, <br /> meld je hieronder aan!</Title>
       <form onSubmit={handleLogin}>
+        <p>{error}</p>
         <LabelStyles>
           <LabelText>E-mailadres</LabelText>
-          <LabelInput name="email" type="email" placeholder="E-mailadres" />
+          <LabelInput name="email" type="email" onChange={() => setError()} placeholder="E-mailadres" />
         </LabelStyles>
         <br />
         <LabelStyles>
           <LabelText>Wachtwoord</LabelText>
-          <LabelInput name="password" type="password" placeholder="Wachtwoord" />
+          <LabelInput name="password" type="password" onChange={() => setError()} placeholder="Wachtwoord" />
         </LabelStyles>
         <br />
         <ButtonStyled type="submit">Inloggen</ButtonStyled>

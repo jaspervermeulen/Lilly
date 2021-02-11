@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import firebase from "../../Authentication/base";
 import { AuthContext } from "../../Authentication/Auth";
 import styled from "styled-components";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const InfoWrapper = styled.div`
   margin: 20px;
